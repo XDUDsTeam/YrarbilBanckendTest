@@ -1,0 +1,59 @@
+﻿<Page
+    x:Class="YrarbilBanckendTest.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:YrarbilBanckendTest"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <Flyout x:Key="LoginFlyout" x:Name="loginFo">
+            <Grid Height="auto" Width="auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="33*"/>
+                    <RowDefinition Height="17*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.RowSpan="2">
+                    <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="用户名"/>
+                    <TextBox x:Name="userName" TextWrapping="Wrap" Text=""/>
+                    <TextBlock x:Name="textBlock1" TextWrapping="Wrap" Text="密码"/>
+                    <PasswordBox x:Name="passWord"/>
+                    <Button x:Name="login_button" Content="LOGIN" HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch" Click="login_button_Click"/>
+
+                </StackPanel>
+            </Grid>
+        </Flyout>
+        <Flyout x:Key="LogoutFlyout" x:Name="logoutFo">
+            <Grid Height="auto" Width="auto">
+                <Button x:Name="logoutButton" Content="LOGOUT" Click="logoutButton_Click"/>
+            </Grid>
+        </Flyout>
+        <Flyout x:Key="Sw">
+            <Grid Height="auto" Width="auto">
+                <StackPanel Height="auto" Width="auto">
+                    <Button Content="JSON" x:Name="toJson" HorizontalAlignment="Center"/>
+                    <Button Content="HTML(浏览)" x:Name="toHtml" HorizontalAlignment="Center" />
+                    <Button Content="Code" x:Name="toText" HorizontalAlignment="Center"/>
+                </StackPanel>
+
+            </Grid>
+        </Flyout>
+    </Page.Resources>
+    <Page.BottomAppBar>
+        <CommandBar FlyoutBase.AttachedFlyout="{StaticResource Sw}">
+            <CommandBar.Content>
+                <Grid/>
+            </CommandBar.Content>
+            <AppBarButton Icon="People" Label="Login" x:Name="Login" Flyout="{StaticResource LoginFlyout}"/>
+            <AppBarButton Icon="List" Label="查看选项" x:Name="ShowWay" Flyout="{StaticResource Sw}"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel Margin="0" d:LayoutOverrides="TopPosition, BottomPosition" HorizontalAlignment="Center" VerticalAlignment="Center" FlyoutBase.AttachedFlyout="{StaticResource LoginFlyout}">
+        </StackPanel>
+        <TextBlock x:Name="requestText" Margin="0" TextWrapping="Wrap"  d:LayoutOverrides="Width" Loaded="requestText_Loaded"/>
+        <Frame x:Name="frame" Content="Frame" Margin="0" d:LayoutOverrides="Width"/>
+    </Grid>
+</Page>
