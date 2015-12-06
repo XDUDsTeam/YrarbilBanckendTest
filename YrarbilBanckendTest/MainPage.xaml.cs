@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.Web.Http;
 using System.Runtime.Serialization.Json;
+using System.Threading.Tasks;
 
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
 
@@ -27,20 +28,43 @@ namespace YrarbilBanckendTest
         /// <summary>
         /// 是否登陆
         /// </summary>
-        bool isLogined = false;
-        string strSource { get; set; }
-
+        bool isLogined;
+        string strSource
+        {
+            get
+            {
+                string t1 = subCode.text,t2 = subJson.text,t3=subHtml.text;
+                if (t1 == t2 && t2 == t3)
+                    return t1;
+                else
+                    throw new Exception("why?");
+            }
+            set
+            {
+                subCode.text = value;
+                subJson.text = value;
+                subHtml.text = value;
+            }
+        }
+        Code subCode { get; set; }
+        Json subJson { get; set; }
+        Html subHtml { get; set; }
 
         public MainPage()
         {
             this.InitializeComponent();
+            isLogined = false;
+            subCode = new Code();
+            subHtml = new Html();
+            subJson = new Json();
+            subP.Content = subCode;
         }
 
         private void login_button_Click(object sender, RoutedEventArgs e)
         {
 
-
-            Login.Flyout = logoutFo;
+            
+            Login.Flyout = loginFo;
             isLogined = true;
             loginFo.Hide();
         }
@@ -51,24 +75,67 @@ namespace YrarbilBanckendTest
             isLogined = false;
             logoutFo.Hide();
         }
-
-        private void requestText_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private string http_get(Uri u,IHttpContent i)
+        
+        private async Task<string> http_get(Uri u)
         {
             HttpClient httpClient = new HttpClient();
             var httpHeaders = httpClient.DefaultRequestHeaders;
             if (!httpHeaders.UserAgent.TryParseAdd("YrarbilBackend-testclient"))
                 throw new Exception("Invalid header value: YrarbilBackend - testclient");
             HttpResponseMessage httpRes = new HttpResponseMessage();
+            string rt;
             try
             {
-                httpResponse
+                httpRes = await httpClient.GetAsync(u);
+                httpRes.EnsureSuccessStatusCode();
+                rt = await httpRes.Content.ReadAsStringAsync();
             }
-            return null;
+            catch (Exception e)
+            {
+                rt = "Error: " + e.HResult.ToString("X") + " Message: " + e.Message;
+            }
+            return rt;
         }
 
+        private async Task<string> http_post(Uri u, IHttpContent c)
+        {
+            HttpClient httpClient = new HttpClient();
+            var httpHeaders = httpClient.DefaultRequestHeaders;
+            if (!httpHeaders.UserAgent.TryParseAdd("YrarbilBackend-testclient"))
+                throw new Exception("Invalid header value: YrarbilBackend - testclient");
+            HttpResponseMessage httpRes = new HttpResponseMessage();
+            string rt;
+            try
+            {
+                httpRes = await httpClient.PostAsync(u, c);
+                httpRes.EnsureSuccessStatusCode();
+                rt = await httpRes.Content.ReadAsStringAsync();
+            }
+            catch (Exception e)
+            {
+                rt = "Error: " + e.HResult.ToString("X") + " Message: " + e.Message;
+            }
+            return rt;
+        }
+
+        private async void subP_Loaded(object sender, RoutedEventArgs e)
+        {
+            strSource = await http_get(new Uri("http://cn.bing.com"));
+        }
+
+        private void toHtml_Click(object sender, RoutedEventArgs e)
+        {
+            subP.Content = subHtml;
+        }
+
+        private void toJson_Click(object sender, RoutedEventArgs e)
+        {
+            subP.Content = subJson;
+        }
+
+        private void toText_Click(object sender, RoutedEventArgs e)
+        {
+            subP.Content = subCode;
+        }
     }
 }
