@@ -29,30 +29,36 @@
                 <Button x:Name="logoutButton" Content="LOGOUT" Click="logoutButton_Click"/>
             </Grid>
         </Flyout>
-        <Flyout x:Key="Sw">
-            <Grid Height="auto" Width="auto">
-                <StackPanel Height="auto" Width="auto">
-                    <Button Content="Code" x:Name="toText" HorizontalAlignment="Center" Click="toText_Click"/>
-                    <Button Content="HTML(浏览)" x:Name="toHtml" HorizontalAlignment="Center" Click="toHtml_Click" />
-                    <Button Content="JSON" x:Name="toJson" HorizontalAlignment="Center" Click="toJson_Click"/>
-                </StackPanel>
-
-            </Grid>
-        </Flyout>
+        <MenuFlyout x:Key="Sw">
+            <MenuFlyoutItem Text="Code" x:Name="toText" HorizontalAlignment="Center" Click="toText_Click"/>
+            <MenuFlyoutSeparator/>
+            <MenuFlyoutItem Text="HTML(浏览)" x:Name="toHtml" HorizontalAlignment="Center" Click="toHtml_Click" />
+            <MenuFlyoutSeparator/>
+            <MenuFlyoutItem Text="JSON" x:Name="toJson" HorizontalAlignment="Center" Click="toJson_Click"/>
+        </MenuFlyout>
     </Page.Resources>
+    <Page.TopAppBar>
+        <AppBar>
+            <Grid>
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" HorizontalScrollMode="Auto" 
+                              VerticalScrollMode="Disabled" VerticalScrollBarVisibility="Disabled">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,6" >
+                        <AppBarButton Icon="Home" Label="主页" x:Name="homeB" Click="homeB_Click" />
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </AppBar>
+    </Page.TopAppBar>
     <Page.BottomAppBar>
         <CommandBar FlyoutBase.AttachedFlyout="{StaticResource Sw}">
-            <CommandBar.Content>
-                <Grid/>
-            </CommandBar.Content>
             <AppBarButton Icon="People" Label="Login" x:Name="Login" Flyout="{StaticResource LoginFlyout}"/>
-            <AppBarButton Icon="List" Label="查看选项" x:Name="ShowWay" Flyout="{StaticResource Sw}"/>
+            <AppBarButton Icon="Globe" Label="查看选项" x:Name="ShowWay" Flyout="{StaticResource Sw}"/>
+            <AppBarButton Icon="Setting" Label="设置" x:Name="Setting" Click="Setting_Click"/>
+            <AppBarButton Icon="SolidStar" Label="关于" x:Name="Info"/>
         </CommandBar>
     </Page.BottomAppBar>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel Margin="0" d:LayoutOverrides="TopPosition, BottomPosition" HorizontalAlignment="Center" VerticalAlignment="Center" FlyoutBase.AttachedFlyout="{StaticResource LoginFlyout}">
-        </StackPanel>
-        <Frame x:Name="subP"  Margin="0" d:LayoutOverrides="Width" Loaded="subP_Loaded"/>
+        <Frame x:Name="subP" Loaded="subP_Loaded"/>
     </Grid>
 </Page>

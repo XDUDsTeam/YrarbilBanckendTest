@@ -1,0 +1,37 @@
+﻿<Page
+    x:Class="YrarbilBanckendTest.Setting"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:YrarbilBanckendTest"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" >
+            <TextBlock x:Name="textBlock"  FontSize="{ThemeResource HubHeaderThemeFontSize}" Text="Settings"/>
+        </Grid>
+        <StackPanel Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="hostname" FontSize="20" Click="hostname_Update" HorizontalAlignment="Stretch"/>
+                <TextBox x:Name="hostNameBox" Grid.Column="1" Loaded="hostNameBox_Loaded"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="port" FontSize="20" Click="port_Update" HorizontalAlignment="Stretch"/>
+                <TextBox x:Name="portBox" Grid.Column="1" Loaded="portBox_Loaded"/>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Page>

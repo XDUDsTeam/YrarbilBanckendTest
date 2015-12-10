@@ -15,30 +15,16 @@ using Windows.UI.Xaml.Navigation;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
 
-namespace YrarbilBanckendTest
+namespace YrarbilBanckendTest.Pages
 {
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class Html : Page
+    public sealed partial class About : Page
     {
-        string textin;
-        public string text
-        {
-            get
-            {
-                return textin;
-            }
-            set
-            {
-                webV.NavigateToString(value);
-                textin = value;
-            }
-        }
-        public Html()
+        public About()
         {
             this.InitializeComponent();
-            text = "";
         }
     }
 }
